@@ -21,7 +21,7 @@ def triple(triple):
             - abi (str, optional): The abi to use or None if abi does not apply.
             - str (str): Original string representation of the triple
     """
-    if triple in ("wasm32-wasi", "wasm32-wasip1"):
+    if triple in ("wasm32-wasi", "wasm32-wasip1", "wasm32-wasip2", "wasm32-wasip3"):
         trip = triple
         if trip == "wasm32-wasi":
             trip = "wasm32-wasip1"

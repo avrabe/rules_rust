@@ -61,6 +61,8 @@ SUPPORTED_T2_PLATFORM_TRIPLES = {
     "thumbv8m.main-none-eabi": _support(std = True, host_tools = False),
     "wasm32-unknown-unknown": _support(std = True, host_tools = False),
     "wasm32-wasip1": _support(std = True, host_tools = False),
+    "wasm32-wasip2": _support(std = True, host_tools = False),
+    "wasm32-wasip3": _support(std = True, host_tools = False),
     "x86_64-apple-ios": _support(std = True, host_tools = False),
     "x86_64-linux-android": _support(std = True, host_tools = False),
     "x86_64-unknown-freebsd": _support(std = True, host_tools = True),
@@ -155,6 +157,8 @@ _SYSTEM_TO_BUILTIN_SYS_SUFFIX = {
     "unknown": None,
     "wasi": None,
     "wasip1": None,
+    "wasip2": None,
+    "wasip3": None,
     "windows": "windows",
 }
 
@@ -179,6 +183,8 @@ _SYSTEM_TO_BINARY_EXT = {
     "unknown": ".wasm",
     "wasi": ".wasm",
     "wasip1": ".wasm",
+    "wasip2": ".wasm",
+    "wasip3": ".wasm",
     "windows": ".exe",
 }
 
@@ -200,6 +206,8 @@ _SYSTEM_TO_STATICLIB_EXT = {
     "unknown": "",
     "wasi": "",
     "wasip1": "",
+    "wasip2": "",
+    "wasip3": "",
     "windows": ".lib",
 }
 
@@ -221,6 +229,8 @@ _SYSTEM_TO_DYLIB_EXT = {
     "unknown": ".wasm",
     "wasi": ".wasm",
     "wasip1": ".wasm",
+    "wasip2": ".wasm",
+    "wasip3": ".wasm",
     "windows": ".dll",
 }
 
@@ -270,6 +280,8 @@ _SYSTEM_TO_STDLIB_LINKFLAGS = {
     "uwp": ["ws2_32.lib"],
     "wasi": [],
     "wasip1": [],
+    "wasip2": [],
+    "wasip3": [],
     "windows": ["advapi32.lib", "ws2_32.lib", "userenv.lib", "Bcrypt.lib"],
 }
 
@@ -413,6 +425,16 @@ def triple_to_constraint_set(target_triple):
             "@platforms//os:wasi",
         ]
     if target_triple == "wasm32-wasip1":
+        return [
+            "@platforms//cpu:wasm32",
+            "@platforms//os:wasi",
+        ]
+    if target_triple == "wasm32-wasip2":
+        return [
+            "@platforms//cpu:wasm32",
+            "@platforms//os:wasi",
+        ]
+    if target_triple == "wasm32-wasip3":
         return [
             "@platforms//cpu:wasm32",
             "@platforms//os:wasi",
