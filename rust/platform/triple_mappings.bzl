@@ -59,10 +59,13 @@ SUPPORTED_T2_PLATFORM_TRIPLES = {
     "s390x-unknown-linux-gnu": _support(std = True, host_tools = True),
     "thumbv7em-none-eabi": _support(std = True, host_tools = False),
     "thumbv8m.main-none-eabi": _support(std = True, host_tools = False),
+    "wasm32-unknown-emscripten": _support(std = True, host_tools = False),
     "wasm32-unknown-unknown": _support(std = True, host_tools = False),
     "wasm32-wasip1": _support(std = True, host_tools = False),
+    "wasm32-wasip1-threads": _support(std = True, host_tools = False),
     "wasm32-wasip2": _support(std = True, host_tools = False),
     "wasm32-wasip3": _support(std = True, host_tools = False),
+    "wasm32v1-none": _support(std = True, host_tools = False),
     "x86_64-apple-ios": _support(std = True, host_tools = False),
     "x86_64-linux-android": _support(std = True, host_tools = False),
     "x86_64-unknown-freebsd": _support(std = True, host_tools = True),
@@ -140,7 +143,7 @@ _SYSTEM_TO_BUILTIN_SYS_SUFFIX = {
     "dragonfly": None,
     "eabi": "none",
     "eabihf": "none",
-    "emscripten": None,
+    "emscripten": "emscripten",
     "freebsd": "freebsd",
     "fuchsia": "fuchsia",
     "ios": "ios",
@@ -423,23 +426,43 @@ def triple_to_constraint_set(target_triple):
         return [
             "@platforms//cpu:wasm32",
             "@platforms//os:wasi",
+            "//rust/platform:wasi_preview_1",
         ]
     if target_triple == "wasm32-wasip1":
         return [
             "@platforms//cpu:wasm32",
             "@platforms//os:wasi",
+            "//rust/platform:wasi_preview_1",
         ]
     if target_triple == "wasm32-wasip2":
         return [
             "@platforms//cpu:wasm32",
             "@platforms//os:wasi",
+            "//rust/platform:wasi_preview_2",
         ]
     if target_triple == "wasm32-wasip3":
         return [
             "@platforms//cpu:wasm32",
             "@platforms//os:wasi",
+            "//rust/platform:wasi_preview_3",
+        ]
+    if target_triple == "wasm32-unknown-emscripten":
+        return [
+            "@platforms//cpu:wasm32",
+            "@platforms//os:emscripten",
         ]
     if target_triple == "wasm32-unknown-unknown":
+        return [
+            "@platforms//cpu:wasm32",
+            "@platforms//os:none",
+        ]
+    if target_triple == "wasm32-wasip1-threads":
+        return [
+            "@platforms//cpu:wasm32",
+            "@platforms//os:wasi",
+            "//rust/platform:wasi_preview_1",
+        ]
+    if target_triple == "wasm32v1-none":
         return [
             "@platforms//cpu:wasm32",
             "@platforms//os:none",
