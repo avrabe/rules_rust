@@ -32,6 +32,14 @@ def triple(triple):
             abi = None,
             str = trip,
         )
+    elif triple == "wasm32v1-none":
+        return struct(
+            arch = "wasm32",
+            vendor = "v1",
+            system = "none",
+            abi = None,
+            str = triple,
+        )
     elif triple in ("aarch64-fuchsia", "x86_64-fuchsia"):
         return struct(
             arch = triple.split("-")[0],
