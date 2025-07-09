@@ -426,25 +426,25 @@ def triple_to_constraint_set(target_triple):
         return [
             "@platforms//cpu:wasm32",
             "@platforms//os:wasi",
-            "//rust/platform:wasi_preview_1",
+            "@rules_rust//rust/platform:wasi_preview_1",
         ]
     if target_triple == "wasm32-wasip1":
         return [
             "@platforms//cpu:wasm32",
             "@platforms//os:wasi",
-            "//rust/platform:wasi_preview_1",
+            "@rules_rust//rust/platform:wasi_preview_1",
         ]
     if target_triple == "wasm32-wasip2":
         return [
             "@platforms//cpu:wasm32",
             "@platforms//os:wasi",
-            "//rust/platform:wasi_preview_2",
+            "@rules_rust//rust/platform:wasi_preview_2",
         ]
     if target_triple == "wasm32-wasip3":
         return [
             "@platforms//cpu:wasm32",
             "@platforms//os:wasi",
-            "//rust/platform:wasi_preview_3",
+            "@rules_rust//rust/platform:wasi_preview_3",
         ]
     if target_triple == "wasm32-unknown-emscripten":
         return [
@@ -460,7 +460,7 @@ def triple_to_constraint_set(target_triple):
         return [
             "@platforms//cpu:wasm32",
             "@platforms//os:wasi",
-            "//rust/platform:wasi_preview_1",
+            "@rules_rust//rust/platform:wasi_preview_1",
         ]
     if target_triple == "wasm32v1-none":
         return [
