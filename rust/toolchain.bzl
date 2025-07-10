@@ -697,8 +697,14 @@ def _rust_toolchain_impl(ctx):
         std,
     )
 
+    # Include C++ toolchain files to ensure tools like 'ar' are available for cross-compilation
+    cc_toolchain, _ = find_cc_toolchain(ctx)
+    all_files_depsets = [sysroot.all_files]
+    if cc_toolchain and cc_toolchain.all_files:
+        all_files_depsets.append(cc_toolchain.all_files)
+
     toolchain = platform_common.ToolchainInfo(
-        all_files = sysroot.all_files,
+        all_files = depset(transitive = all_files_depsets),
         binary_ext = ctx.attr.binary_ext,
         cargo = sysroot.cargo,
         clippy_driver = sysroot.clippy,
