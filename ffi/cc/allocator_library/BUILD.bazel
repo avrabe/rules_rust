@@ -7,6 +7,8 @@ cc_library(
         # If someone can make this work on Windows, please do!
         # For now we will silently not supply any symbols, because it would be very messy to conditionally define the default allocator library on toolchains depending on the platform.
         "@platforms//os:windows": ["empty.cc"],
+        # WASI doesn't need the allocator library - WASI runtime provides allocation
+        "@platforms//os:wasi": ["empty.cc"],
         "//conditions:default": ["allocator_library.cc"],
     }),
     tags = ["manual"],
