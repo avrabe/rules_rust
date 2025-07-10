@@ -137,9 +137,9 @@ def _ltl(library, actions, cc_toolchain, feature_configuration):
         LibraryToLink: A provider containing information about libraries to link.
     """
     # Include C++ toolchain files as additional inputs for cross-compilation
-    additional_inputs = depset()
+    additional_inputs = []
     if cc_toolchain and cc_toolchain.all_files:
-        additional_inputs = cc_toolchain.all_files
+        additional_inputs = cc_toolchain.all_files.to_list()
         
     return cc_common.create_library_to_link(
         actions = actions,
@@ -200,9 +200,9 @@ def _make_libstd_and_allocator_ccinfo(
         )
 
         # Include C++ toolchain files as additional inputs for cross-compilation scenarios
-        additional_inputs = depset()
+        additional_inputs = []
         if cc_toolchain and cc_toolchain.all_files:
-            additional_inputs = cc_toolchain.all_files
+            additional_inputs = cc_toolchain.all_files.to_list()
 
         linking_context, _linking_outputs = cc_common.create_linking_context_from_compilation_outputs(
             name = label.name,
