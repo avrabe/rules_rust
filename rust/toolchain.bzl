@@ -136,12 +136,18 @@ def _ltl(library, ctx, cc_toolchain, feature_configuration):
     Returns:
         LibraryToLink: A provider containing information about libraries to link.
     """
+    # Include C++ toolchain files as additional inputs for cross-compilation
+    additional_inputs = depset()
+    if cc_toolchain and cc_toolchain.all_files:
+        additional_inputs = cc_toolchain.all_files
+        
     return cc_common.create_library_to_link(
         actions = ctx.actions,
         feature_configuration = feature_configuration,
         cc_toolchain = cc_toolchain,
         static_library = library,
         pic_static_library = library,
+        additional_inputs = additional_inputs,
     )
 
 def _make_libstd_and_allocator_ccinfo(ctx, rust_std, allocator_library, std = "std"):
@@ -175,12 +181,18 @@ def _make_libstd_and_allocator_ccinfo(ctx, rust_std, allocator_library, std = "s
             objects = depset(rust_stdlib_info.self_contained_files),
         )
 
+        # Include C++ toolchain files as additional inputs for cross-compilation scenarios
+        additional_inputs = depset()
+        if cc_toolchain and cc_toolchain.all_files:
+            additional_inputs = cc_toolchain.all_files
+
         linking_context, _linking_outputs = cc_common.create_linking_context_from_compilation_outputs(
             name = ctx.label.name,
             actions = ctx.actions,
             feature_configuration = feature_configuration,
             cc_toolchain = cc_toolchain,
             compilation_outputs = compilation_outputs,
+            additional_inputs = additional_inputs,
         )
 
         cc_infos.append(CcInfo(
