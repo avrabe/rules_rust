@@ -777,7 +777,6 @@ def _experimental_link_std_dylib(ctx):
 rust_toolchain = rule(
     implementation = _rust_toolchain_impl,
     fragments = ["cpp"],
-    toolchains = ["@bazel_tools//tools/cpp:toolchain_type"],
     attrs = {
         "allocator_library": attr.label(
             doc = "Target that provides allocator functions when rust_library targets are embedded in a cc_binary.",
