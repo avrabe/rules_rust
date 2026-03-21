@@ -535,8 +535,9 @@ def get_linker_and_args(ctx, crate_type, toolchain, cc_toolchain, feature_config
         # so put our cc_toolchain library search path on the command line where it has
         # precedence over the non-hermetic path injected by rustc.
         link_args.extend([
-            "-LIBPATH:" + element
+            '-LIBPATH:"' + element + '"'
             for element in link_env["LIB"].split(";")
+            if element
         ])
 
     return ld, ld_is_direct_driver, link_args, link_env

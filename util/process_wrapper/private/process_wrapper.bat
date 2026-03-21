@@ -9,18 +9,19 @@ SET command=!command:${pwd}=%CD%!
 :: Strip out the leading `--` argument.
 SET command=!command:~3!
 
-:: Find the rustc.exe argument and sanitize it's path
-for %%A in (%*) do (
-    SET arg=%%~A
-    if "!arg:~-9!"=="rustc.exe" (
-        SET sanitized=!arg:/=\!
-
-        SET command=!sanitized! !command:%%~A=!
-        goto :break
-    )
+:: Find the rustc.exe path (always the first argument after --)
+:: and convert forward slashes to backslashes so cmd.exe can execute it.
+:: We use FOR /F on the command variable instead of FOR..IN(%*)
+:: because the latter breaks when arguments contain parentheses
+:: (e.g. paths with "(x86)" in LIBPATH arguments).
+for /f "tokens=1,* delims= " %%A in ("!command!") do (
+    SET "first=%%A"
+    SET "rest=%%B"
 )
-
-:break
+if "!first:~-9!"=="rustc.exe" (
+    SET "first=!first:/=\!"
+    SET "command=!first! !rest!"
+)
 
 %command%
 
